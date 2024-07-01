@@ -4,8 +4,8 @@ const Select = ({ list, onChange }) => {
   return (
     <div>
       {/* {console.log(list)} */}
-      <select onChange={(e)=>{
-        onChange(e.target.selectedIndex)
+      <select className="w-full" onChange={(e)=>{
+        onChange(e.target.selectedOptions[0].id)
       }}>
         {list.map((item,index) => 
             <option key={index} id={item.id}>{item.text}</option>
