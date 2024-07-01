@@ -26,7 +26,7 @@
     "url": "master"
   },
   "proxy":"http://localhost:3001",
-  "author": "RHG",
+  "author": "PJS",
   "license": "ISC",
   "browserslist": {
     "production": [
