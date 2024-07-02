@@ -1,14 +1,14 @@
 import React from "react";
 
-const Select = ({ list, onChange }) => {
+const Select = ({ id, list, onChange }) => {
   return (
     <div>
       {/* {console.log(list)} */}
-      <select className="w-full" onChange={(e)=>{
-        onChange(e.target.selectedOptions[0].id)
+      <select id={id} className="w-full p-2 bg-white rounded-md" onChange={(e)=>{
+        onChange(e.target.selectedOptions[0].value)
       }}>
         {list.map((item,index) => 
-            <option key={index} id={item.id}>{item.text}</option>
+            <option key={index} value={item.value}>{item.text}</option>
         )}
       </select>
     </div>
