@@ -1,10 +1,11 @@
 import React from "react";
 
-const Select = ({ id, list, onChange }) => {
+const Select = ({ id, list, cur, onChange }) => {
   return (
     <div>
-      {/* {console.log(list)} */}
-      <select id={id} className="w-full p-2 bg-white rounded-md" onChange={(e)=>{
+      {/* {console.log(list)} */
+      console.log("select render")}
+      <select id={id} defaultValue={cur-1} className="w-full p-1 bg-white rounded-md" onChange={(e)=>{
         onChange(e.target.selectedOptions[0].value)
       }}>
         {list.map((item,index) => 
