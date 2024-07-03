@@ -2,8 +2,15 @@ import React, { useCallback, useState } from "react";
 import TypingBoard from "../TypingBoard";
 
 const KeySchool = () => {
-  const textlist = ["HTML is the standard markup language for Web pages. With HTML you can create your own Website. ",
-    "CSS is the language we use to style an HTML document. CSS describes how HTML elements should be displayed.This tutorial will teach you CSS from basic to advanced.",
+  const textlist = [
+    "fly relate house expert charge interview itself because job consider knowledge color low late hope ",
+    "significant understand business home where entire tonight want heavy such sell way employee by civil hold executive become station successful",
+    "enough task exactly reflect about fear let perform term always industry spend feeling play federal performance season major buy ability evidence treat wall true like project return popular whether inside",
+    " especially say size fast really activity final use strategy maintain see add explain conference school line almost economy rise various claim range imagine their central watch art right century scientist thought radio rule call administration",
+    " light concern pick coach make chair suddenly information show rock pretty ready hang finally music cold join professional later though series head college building career consumer everyone sure area maybe history wear land matter save realize family plan risk compare prepare simply meet last however",
+    "score rest card also bring begin movement moment material night reduce these live condition yeah food than morning city speak enjoy laugh teacher cell health well summer player interesting might subject movie themselves price trip address anything million get image probably recent why reveal billion write hair may remove car response just",
+    "HTML is the standard markup language for Web pages. With HTML you can create your own Website. HTML stands for Hyper Text Markup Language.",
+    "CSS is the language we use to style an HTML document. CSS describes how HTML elements should be displayed.This tutorial will teach you CSS from basic to advanced. This is a demonstration of how different stylesheets can change the layout of your HTML page.",
     "JavaScript is the world's most popular programming language. JavaScript is the programming language of the Web. JavaScript is easy to learn. This tutorial will teach you JavaScript from basic to advanced.",
     "If you've previously installed create-react-app globally, it is recommended that you uninstall the package to ensure npx always uses the latest version of create-react-app. To uninstall, run this command: npm uninstall -g create-react-app The React useState Hook allows us to track state in a function component. State generally refers to data or properties that need to be tracking in an application.",
     "In older React code bases, you may find Class components primarily used. It is now suggested to use Function components along with Hooks, which were added in React 16.8. There is an optional section on Class components for your reference. Keys allow React to keep track of elements. This way, if an item is updated or removed, only that item will be re-rendered instead of the entire list.",
@@ -19,6 +26,7 @@ const KeySchool = () => {
   const [tryNum, setTryNum] = useState(0)
   // console.log(tryNum)
   const levelUp = useCallback(() => {
+    console.log("levelUp")
     if (level < 10) {
       setLevel(prev => prev + 1);
       setCurText(textlist[level]);
@@ -32,7 +40,7 @@ const KeySchool = () => {
   return (
     <div className="bg-green-500 w-full">
       {/* {console.log(curText)} */}
-      <TypingBoard basicText={curText} selText={selText} setTryNum={setTryNum} level={level} levelUp={levelUp} />
+      <TypingBoard basicText={curText} selText={selText} level={level} levelUp={levelUp} />
     </div>
   );
 };
