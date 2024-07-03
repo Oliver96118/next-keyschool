@@ -61,7 +61,6 @@ const TypingBoard = ({ basicText, selText, level, levelUp }) => {
     setTime(timeList[level].value);
     clearTimeout(timer)
     setTimer(null);
-    setSecRate(time);
   }
 
   const closeModal = () => {
@@ -103,7 +102,6 @@ const TypingBoard = ({ basicText, selText, level, levelUp }) => {
   //time calculation
   useEffect(() => {
     if (time === 0) {
-
       document.getElementById("modal").style.display = "block";
       clearInterval(timer);
       if (typingNum == text.length) {
@@ -112,6 +110,7 @@ const TypingBoard = ({ basicText, selText, level, levelUp }) => {
       window.removeEventListener("keydown", () => { keyEvent(e) })
       setTimer(null);
     }
+
     if (time > 0 && timer != null) {
       setTimer(
         setTimeout(() => {
@@ -125,14 +124,12 @@ const TypingBoard = ({ basicText, selText, level, levelUp }) => {
   keyEvent = (e) => {
 
     // decide if typing is done or time is up
-    console.log(typingNum)
+    // console.log(typingNum)
+
     if (typingNum == text.length || time == 0) {
 
       document.getElementById("modal").style.display = "block";
       clearTimeout(timer);
-      if (typingNum == text.length) {
-        // levelUp();
-      }
       window.removeEventListener("keydown", (e) => { keyEvent(e) });
     }
 
@@ -142,15 +139,13 @@ const TypingBoard = ({ basicText, selText, level, levelUp }) => {
     //if typing is available
     if (typingNum < text.length && time > 0) {
       // console.log(e.key)
-
-
       if (
         (e.keyCode > 48 && e.keyCode < 91) ||
         speCar.includes(e.key) ||
         e.keyCode == 32
       ) {
         // initial setting
-        if (time == secRate) {
+        if (typingNum === 1) {
           document.getElementById("modal").addEventListener("keydown", (e) => {
             if (e.key == " " || e.key == "Enter") {
               closeModal();
@@ -158,17 +153,15 @@ const TypingBoard = ({ basicText, selText, level, levelUp }) => {
           })
           setTimer('');
           setTime((prev) => prev - 1); //trigger timing action
+          setSecRate(time);
           setMInRate(time / 60);
-
         }
-
         var key = e.key;
         // refuse error in NoError mode
         if (key != text[typingNum - 1]) {
           setErrorNum(prev => prev + 1);
           if (mode) return;
         }
-
         setTypingNum((prev) => prev + 1);
         console.log(typingNum)
 
@@ -261,7 +254,7 @@ const TypingBoard = ({ basicText, selText, level, levelUp }) => {
               <div className="flex justify-between text-center mt-1">Word per min:<div>{Math.round(wordNum * 100 / minRate) / 100} words / min</div> </div>
               <div className="flex justify-between text-center mt-1">Chars per sec:<div>{Math.round(correcNum * 100 / secRate) / 100} chars / sec</div> </div>
             </div>
-            <button className="bg-gray-400 rounded-md mt-3 text-center px-5 py-2 hover:bg-gray-500 text-white" onKeyDown={closeModal} onClick={closeModal}>O K</button>
+            <button className="bg-gray-400 rounded-md mt-3 text-center px-5 py-2 hover:bg-gray-500 text-white" onClick={closeModal}>O K</button>
           </div>
         </div>
       </div>

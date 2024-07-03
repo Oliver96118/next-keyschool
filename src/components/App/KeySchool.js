@@ -21,6 +21,19 @@ const KeySchool = () => {
     "Many other companies use APIs internally to streamline development on multiple platforms such as iPhone, Android, and Desktop. For example, Facebook and LinkedIn use APIs so that their engineers have access to the same data regardless of what platform they are programming for.",
     "Java is a popular programming language. Java is used to develop mobile apps, web apps, desktop apps, games and much more. Java is an object oriented language and some concepts may be new. Take breaks when needed, and go over the examples as many times as needed."
   ];
+  const timeList = [
+    { value: 30, text: "30s" },
+    { value: 30, text: "30s" },
+    { value: 45, text: "45s" },
+    { value: 45, text: "45s" },
+    { value: 45, text: "45s" },
+    { value: 60, text: "1min" },
+    { value: 60, text: "1min" },
+    { value: 60, text: "1min" },
+    { value: 90, text: "1.5min" },
+    { value: 90, text: "1.5min" },
+    { value: 120, text: "2min" },
+  ];
   const [curText, setCurText] = useState(textlist[0]);
   const [level, setLevel] = useState(1);
   const [tryNum, setTryNum] = useState(0)
@@ -40,7 +53,7 @@ const KeySchool = () => {
   return (
     <div className="bg-green-500 w-full">
       {/* {console.log(curText)} */}
-      <TypingBoard basicText={curText} selText={selText} level={level} levelUp={levelUp} />
+      <TypingBoard basicText={curText} selText={selText} level={level} levelUp={levelUp}/>
     </div>
   );
 };
