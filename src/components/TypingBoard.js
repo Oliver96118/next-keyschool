@@ -145,7 +145,7 @@ const TypingBoard = ({ basicText, selText, level, levelUp }) => {
         e.keyCode == 32
       ) {
         // initial setting
-        if (typingNum === 1) {
+        if (typingNum === 1 && errorNum == 0) {
           document.getElementById("modal").addEventListener("keydown", (e) => {
             if (e.key == " " || e.key == "Enter") {
               closeModal();
