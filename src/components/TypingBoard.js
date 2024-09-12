@@ -4,14 +4,14 @@ var keyEvent;
 window.addEventListener("keydown", (e) => {
   keyEvent(e);
 });
-const TypingBoard = ({ basicText, selText, level, levelUp }) => {
+const TypingBoard = ({ basicText, selText, level, levelUp, levelDown}) => {
   console.log("typingBoard render")
   const [totalChr, setTotalChr] = useState(0);
   const [mode, setMode] = useState(true);
   const [passFlag, setPassFlag] = useState(false);
-  const [time, setTime] = useState(30);
+  const [time, setTime] = useState(20);
   const [minRate, setMInRate] = useState(1);
-  const [secRate, setSecRate] = useState(30);
+  const [secRate, setSecRate] = useState(20);
   const [errorNum, setErrorNum] = useState(0)
   const [correcNum, setCorrecNum] = useState(0)
   const [wordNum, setWordNum] = useState(0);
@@ -32,10 +32,11 @@ const TypingBoard = ({ basicText, selText, level, levelUp }) => {
     { value: 8, text: "Text 9" },
     { value: 9, text: "Text 10" },
   ];
+   
   const timeList = [
+    { value: 20, text: "20s" },
+    { value: 20, text: "20s" },
     { value: 30, text: "30s" },
-    { value: 30, text: "30s" },
-    { value: 45, text: "45s" },
     { value: 45, text: "45s" },
     { value: 45, text: "45s" },
     { value: 60, text: "1min" },
@@ -48,11 +49,22 @@ const TypingBoard = ({ basicText, selText, level, levelUp }) => {
   // console.log(minRate)
   // console.log(mode);
   // console.log(passFlag)
-  console.log(time)
+  // console.log(level)
+  // console.log(time)
+  const closeModal = () => {
+    console.log("close modal")
+    console.log(typingNum);
+    document.getElementById(typingNum-1).classList.remove("bg-blue-300");
+    document.getElementById("modal").style.display = "none";
+    if (typingNum == text.length) levelUp();
+    restart();
+  }
   const restart = () => {
+    console.log("restart")
     document.getElementById("Typing-board").innerHTML = "";
-    if (document.getElementById(typingNum - 1))
-      document.getElementById(typingNum - 1).classList.remove("bg-blue-300")
+    if (document.getElementById(typingNum - 1)){
+      document.getElementById(typingNum - 1).classList.remove("bg-blue-300");
+    }
     setPassFlag(false)
     setTypingNum(1);
     setErrorNum(0);
@@ -63,12 +75,6 @@ const TypingBoard = ({ basicText, selText, level, levelUp }) => {
     setTimer(null);
   }
 
-  const closeModal = () => {
-    console.log("close modal")
-    document.getElementById("modal").style.display = "none";
-    if (typingNum == text.length) levelUp();
-    restart();
-  }
   // initialize TypingBoard when the typing text changes
   useEffect(() => {
     let textBoard;
@@ -102,8 +108,10 @@ const TypingBoard = ({ basicText, selText, level, levelUp }) => {
   //time calculation
   useEffect(() => {
     if (time === 0) {
-      document.getElementById("modal").style.display = "block";
       clearInterval(timer);
+      document.getElementById("modal").style.display = "block";
+      // document.getElementsByTagName('button').blur();
+      // document.getElementById("closeBtn").focus();
       if (typingNum == text.length) {
         // levelUp();
       }
@@ -124,12 +132,12 @@ const TypingBoard = ({ basicText, selText, level, levelUp }) => {
   keyEvent = (e) => {
 
     // decide if typing is done or time is up
-    // console.log(typingNum)
-
+    console.log(typingNum)
+    document.getElementById('hiddenBtn').focus();
     if (typingNum == text.length || time == 0) {
-
-      document.getElementById("modal").style.display = "block";
       clearTimeout(timer);
+      document.getElementById("modal").style.display = "block";
+      // document.getElementById("closeBtn").focus();
       window.removeEventListener("keydown", (e) => { keyEvent(e) });
     }
 
@@ -143,7 +151,7 @@ const TypingBoard = ({ basicText, selText, level, levelUp }) => {
         (e.keyCode > 48 && e.keyCode < 91) ||
         speCar.includes(e.key) ||
         e.keyCode == 32
-      ) {
+      ){
         // initial setting
         if (typingNum === 1 && errorNum == 0) {
           document.getElementById("modal").addEventListener("keydown", (e) => {
@@ -163,8 +171,6 @@ const TypingBoard = ({ basicText, selText, level, levelUp }) => {
           if (mode) return;
         }
         setTypingNum((prev) => prev + 1);
-        console.log(typingNum)
-
 
         // follow typing character in "text-board"
         var curSpanClass = null;
@@ -198,9 +204,8 @@ const TypingBoard = ({ basicText, selText, level, levelUp }) => {
     }
   };
 
-
   return (
-    <div className="relative p-10 bg-gray-200 rounded-md">
+    <div className="relative h-full p-10 bg-gray-200 rounded-md">
       <div className="flex justify-between px-5">
         <div className="flex flex-col">
           <div className="flex items-center justify-between py-1">
@@ -218,10 +223,12 @@ const TypingBoard = ({ basicText, selText, level, levelUp }) => {
 
         </div>
         <div className="flex flex-col justify-between">
-          <div className="text-4xl text-center">{time}</div>
-          <div className="flex">
-            <button className="bg-blue-600 text-white px-5 py-2 text-xl text-center rounded-md mr-2" onClick={restart}>Restart</button>
-            <button className="bg-blue-600 text-white px-5 py-2 text-xl text-center rounded-md" onClick={levelUp}>Level Up</button>
+          <div className="text-7xl text-center">{time}</div>
+          <div className="flex flex-wrap">
+            <button className="w-36 bg-blue-600 text-white px-5 py-2 text-xl text-center rounded-md" onClick={levelDown}>Level Down</button>
+            <button className="w-36 bg-blue-600 text-white px-5 py-2 text-xl text-center rounded-md mx-2" onClick={restart}>Restart</button>
+            <button className="w-36 bg-blue-600 text-white px-5 py-2 text-xl text-center rounded-md" onClick={levelUp}>Level Up</button>
+            <button id="hiddenBtn"></button>
           </div>
         </div>
         <div className="flex flex-col justify-between w-40 pt-3">
@@ -233,28 +240,28 @@ const TypingBoard = ({ basicText, selText, level, levelUp }) => {
       </div>
       <div
         id="text-board"
-        className="flex flex-wrap content-start bg-white h-2/5 mt-5 p-3 text-gray-600 rounded-md  text-3xl overflow-auto">
+        className="flex flex-wrap content-start bg-white  mt-5 p-3 text-gray-600 rounded-md  text-3xl overflow-auto">
       </div>
       <div
         id="Typing-board"
-        className="flex flex-wrap content-start bg-white h-2/5 mt-5 p-3 rounded-md text-3xl overflow-auto ">
+        className="flex flex-wrap content-start bg-white min-h-[60px] mt-5 p-3 rounded-md text-3xl overflow-auto ">
       </div>
       <div id="modal" className="w-full h-full pt-[150px] bg-gray-600 bg-opacity-50 fixed top-0 left-0 hidden ">
         <div className="w-1/2 bg-white rounded-xl shadow-xl shadow-gray-500  m-auto p-5 z-10">
           <div className="text-3xl text-gray-500 text-center">
             {passFlag ? <div>{level == 10 ? <div>Congraturation!</div> : ""}You passed!</div>
-              : <div>You lose!</div>}
+              : <div>You lose {level} level!</div>}
           </div>
           <div className="flex flex-col p-5 text-gray-500 text-center">
             <div className="w-3/5 m-auto flex flex-col justify-between">
-              <div className="flex justify-between text-center mt-1">Total Typing: <div>{typingNum} chrs</div> </div>
+              <div className="flex justify-between text-center mt-1">Total Typing: <div>{typingNum} chars</div> </div>
               <div className="flex justify-between text-center mt-1">Corrects:<div>{typingNum - errorNum} chars</div> </div>
               <div className="flex justify-between text-center mt-1">Errors:<div>{errorNum} chars</div> </div>
               <div className="flex justify-between text-center mt-1">Accurate:<div>{Math.round(correcNum * 100 / (correcNum + errorNum))} %</div> </div>
-              <div className="flex justify-between text-center mt-1">Word per min:<div>{Math.round(wordNum * 100 / minRate) / 100} words / min</div> </div>
-              <div className="flex justify-between text-center mt-1">Chars per sec:<div>{Math.round(correcNum * 100 / secRate) / 100} chars / sec</div> </div>
+              <div className="flex justify-between text-center mt-1">Words per min:<div>{Math.round(wordNum * 100 / minRate) / 100} words / min</div> </div>
+              <div className="flex justify-between text-center mt-1">Chars per sec:<div>{Math.round((typingNum - errorNum) * 100 / secRate) / 100} chars / sec</div> </div>
             </div>
-            <button className="bg-gray-400 rounded-md mt-3 text-center px-5 py-2 hover:bg-gray-500 text-white" onClick={closeModal}>O K</button>
+            <button id="closeBtn" className="bg-gray-400 rounded-md mt-3 text-center px-5 py-2 hover:bg-gray-500 text-white outline-none" onClick={closeModal}>O K</button>
           </div>
         </div>
       </div>
